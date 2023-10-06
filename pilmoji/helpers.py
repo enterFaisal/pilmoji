@@ -11,6 +11,8 @@ from PIL import ImageFont
 
 from typing import Dict, Final, List, NamedTuple, TYPE_CHECKING, Tuple
 
+# from unicodedata import bidirectional
+
 if TYPE_CHECKING:
     from .core import FontT
 
@@ -63,9 +65,10 @@ class Node(NamedTuple):
 
     type: NodeType
     content: str
+    # direction: str = "ltr"
 
     def __repr__(self) -> str:
-        return f'<Node type={self.type.name!r} content={self.content!r}>'
+        return f'<Node type={self.type.name!r} content={self.content!r} >'
 
 
 def _parse_line(line: str, /) -> List[Node]:
@@ -88,6 +91,16 @@ def _parse_line(line: str, /) -> List[Node]:
 
     return nodes
 
+
+
+# def text_orientation(s):
+#     properties = ['ltr' if v == "L" else 'rtl' if v in ["AL", "R"] else "-" for v in [bidirectional(c) for c in list(s)]]
+#     for value in properties:
+#         if value == "ltr":
+#             return "ltr"
+#         elif value == "rtl":
+#             return "rtl"
+#     return None
 
 def to_nodes(text: str, /) -> List[List[Node]]:
     """Parses a string of text into :class:`~.Node`s.

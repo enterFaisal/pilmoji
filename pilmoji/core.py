@@ -267,6 +267,9 @@ class Pilmoji:
 
         if font is None:
             font = ImageFont.load_default()
+        
+        if align == "right" or align == "center":
+            max_x ,_ = self.getsize(text, font)
 
         args = (
             fill,
@@ -288,7 +291,12 @@ class Pilmoji:
         nodes = to_nodes(text)
 
         for line in nodes:
-            x = original_x
+            if align == "right":
+                x = max_x - self.getsize("".join([node.content for node in line]), font)[0]
+            elif align == "center":
+                x = int(max_x / 2 - self.getsize("".join([node.content for node in line]), font)[0] / 2)
+            else:
+                x = original_x
 
             for node in line:
                 content = node.content
