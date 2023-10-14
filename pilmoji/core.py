@@ -292,9 +292,9 @@ class Pilmoji:
 
         for line in nodes:
             if align == "right":
-                x = max_x - self.getsize("".join([node.content for node in line]), font)[0]
+                x = max_x - self.getsize("".join([node.content for node in line]), font)[0]+original_x
             elif align == "center":
-                x = int(max_x / 2 - self.getsize("".join([node.content for node in line]), font)[0] / 2)
+                x = int((max_x - self.getsize("".join([node.content for node in line]), font)[0]) / 2)+original_x
             else:
                 x = original_x
 
